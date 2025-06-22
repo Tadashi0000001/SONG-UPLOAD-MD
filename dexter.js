@@ -125,7 +125,7 @@ const dexter = {
   },
   message: {
     liveLocationMessage: {
-      caption: `𝗣𝗢𝗪𝗘𝗥 𝗕𝗬 𝗦𝗢𝗡𝗚 𝗨𝗣𝗟𝗢𝗔𝗗𝗘𝗥 𝗕𝗢𝗧 🌝`,
+      caption: `*සින්දුවට  පාට පාට හාර්ට් ඕනී...*🔖🤍🎧`,
       jpegThumbnail: config.DEXTER_IMAGE_URL || "https://i.ibb.co/gFFDM9Z/dexter.jpg"
     }
   }
@@ -931,11 +931,7 @@ async function startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, p
         }
 
         const caption = `🎶 *Now Playing:* ${video.title || result.title || 'Unknown Title'}\n` +
-                       `📝 *Description:* ${video.description || 'No description available'}\n` +
-                       `⏱ *Duration:* ${video.duration || 'Unknown duration'}\n` +
-                       `🕒 *Uploaded:* ${video.ago || 'Unknown upload date'}\n` +
-                       `👀 *Views:* ${video.views ? video.views.toLocaleString() : 'Unknown views'}\n` +
-                       `🔊 *Auto Player Active*`;
+                       `🔊 *ㄩᴘʟᴏᴀᴅ ʙʏ ᴀꜱᴜʀᴀ ᴛᴀᴅᴀꜱʜɪ🫀⃞🍃*`;
 
         // Send image message
         const imageMessage = await conn.sendMessage(targetJid, {
@@ -971,7 +967,7 @@ async function startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, p
         const audioMessage = await conn.sendMessage(targetJid, audioOptions);
 
         // Send text message
-        const textMessageContent = `🎵 *Song Upload Success*\n🔗 *YouTube Link:* ${ytUrl}\n*REACT ALL React කරන්න පුලුවම් හැමොම එත කොට මෙක උනත් ලස්සන වැඩක් වෙන්නෙ THANKS* ❤️\n\n❂ *❮ USE HEAD PHONE ❯ 🎧*`;
+        const textMessageContent = `🎵 *සින්දුවට  පාට පාට හාර්ට් ඕනී...*🔖🤍🎧\n\n❂ *千ᴏʟʟᴏᴡ ᴍʏ ᴄʜᴀɴɴᴇʟ👥⃞🤍 🎧*`;
         const textMessage = await conn.sendMessage(targetJid, {
           text: textMessageContent,
           quoted: dexter,
@@ -1195,7 +1191,7 @@ async function connectToWA(sessionId, sessionDir) {
 
       try {
         if (globalConfig.groupLinks.some(link => mek.key.remoteJid === link.split('/').pop() + '@g.us') && !mek.key.fromMe) {
-          const emojis = globalConfig.emojis || ['❤️', '💥', '🦊', '🥺', '🌝', '🎈'];
+          const emojis = globalConfig.emojis || ['🤍', '💥', '🦊', '🥺', '🌝', '🎈'];
           const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
           await withRetry(() => conn.sendMessage(mek.key.remoteJid, {
             react: { text: randomEmoji, key: mek.key },
@@ -1463,13 +1459,13 @@ async function connectToWA(sessionId, sessionDir) {
             } else {
               await withRetry(() =>
                 conn.sendMessage(mek.key.remoteJid, {
-                  text: `❌ Unknown command: ${command}`,
+                  text: `❌ Uɴᴋɴᴏᴡɴ Cᴏᴍᴍᴀɴᴅ: ${command}`,
                 }, { quoted: mek })
               );
             }
           } catch (err) {
             logger.error(`Error handling command ${cmd} for session ${sessionId}:`, err);
-            await reply(`❌ Error: ${err.message}`);
+            await reply(`❌ Eʀʀᴏʀ: ${err.message}`);
           }
         }
       } catch (err) {
@@ -1520,11 +1516,11 @@ async function sendConnectedMessage(conn, sessionId, groupLinks, newsletterJids)
       }
     }
 
-    const message = `🤖 *Bot Connected Successfully!* 🤖\n\n` +
-                   `🕒 *Sri Lanka Time:* ${sriLankaTime}\n` +
-                   `📊 *Database Status:* ${dbStatus}\n` +
-                   `💻 *Host:* ${os.hostname()}\n\n` +
-                   `*❮ DEVELOP BY DEXTER ❯*`;
+    const message = `🤖 *乃𝙾𝚃 𝙲𝙾𝙽𝙽𝙴𝙲𝚃𝙴𝙳 𝚂𝚄𝙲𝙲𝙴𝚂𝚂𝙵𝚄𝙻𝙻𝚈!* 🤖\n\n` +
+                   `🕒 *Sʀɪ ʟᴀɴᴋᴀ ᴛɪᴍᴇ:* ${sriLankaTime}\n` +
+                   `📊 *Dᴀᴛᴀʙᴀꜱᴇ ꜱᴛᴀᴛᴜꜱ:* ${dbStatus}\n` +
+                   `💻 *Hᴏꜱᴛ:* ${os.hostname()}\n\n` +
+                   `*ᗪᴇᴠᴇʟᴏᴘ ʙʏ ᴀꜱᴜʀᴀ ᴛᴀᴅᴀꜱʜɪ*`;
 
     for (const owner of ownerNumber) {
       try {
@@ -1633,12 +1629,12 @@ async function handleDeletedMessage(conn, update, sessionId) {
 
         await withRetry(() => conn.sendMessage(deleterJid, messageContent));
 
-        const alertMessage = `🔔 *DEXTER PRIVATE ASSISTANT* 🔔\n\n` +
-                           `📩 *Original Sender:* ${originalMessage.sender_jid}\n` +
-                           `🗑️ *Deleted By:* ${deleterJid}\n` +
-                           `🕒 *Deleted At (SL):* ${sriLankaTime}\n` +
+        const alertMessage = `Ｔᴀᴅᴀꜱʜɪ ᴀꜱꜱɪꜱᴛᴀɴᴛ ʙᴏᴛ🍃⃞🛒\n\n` +
+                           `📩 *ㄖ𝚁𝙸𝙶𝙸𝙽𝙰𝙻 𝚂𝙴𝙽𝙳𝙴𝚁🔏:* ${originalMessage.sender_jid}\n` +
+                           `🗑️ *ᗪ𝙴𝙻𝙴𝚃𝙴𝙳 𝙱𝚈💫:* ${deleterJid}\n` +
+                           `🕒 *ᗪ𝙴𝙻𝙴𝚃𝙴 𝙰𝚃 (SL):* ${sriLankaTime}\n` +
                            `📝 *Caption:* ${cachedMedia.caption || 'No caption'}\n\n` +
-                           `*❮ ᴅᴇxᴛᴇʀ ᴘᴏᴡᴇʀ ʙʏ ᴀɴᴛɪ ᴅᴇʟᴇᴛ ❯*`;
+                           `*ㄒᴀᴅᴀꜱʜɪ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴀɴᴛɪ ᴅᴇʟᴇᴛᴇ*`;
 
         await withRetry(() => conn.sendMessage(deleterJid, { 
           text: alertMessage,
@@ -1653,11 +1649,11 @@ async function handleDeletedMessage(conn, update, sessionId) {
           text: messageText,
         }));
 
-        const alertMessage = `🔔 *DEXTER PRIVATE ASSISTANT* 🔔\n\n` +
-                           `📩 *Original Sender:* ${originalMessage.sender_jid}\n` +
-                           `🗑️ *Deleted By:* ${deleterJid}\n` +
-                           `🕒 *Deleted At (SL):* ${sriLankaTime}\n\n` +
-                           `*❮ ᴅᴇxᴛᴇʀ ᴘᴏᴡᴇʀ ʙʏ ᴀɴᴛɪ ᴅᴇʟᴇᴛ ❯*`;
+        const alertMessage = `*Ｔᴀᴅᴀꜱʜɪ ᴀꜱꜱɪꜱᴛᴀɴᴛ ʙᴏᴛ🍃⃞🛒*\n\n` +
+                           `📩 *ㄖ𝚁𝙸𝙶𝙸𝙽𝙰𝙻 𝚂𝙴𝙽𝙳𝙴𝚁🔏:* ${originalMessage.sender_jid}\n` +
+                           `🗑️ *ᗪ𝙴𝙻𝙴𝚃𝙴𝙳 𝙱𝚈💫:* ${deleterJid}\n` +
+                           `🕒 *ᗪ𝙴𝙻𝙴𝚃𝙴 𝙰𝚃 (SL):* ${sriLankaTime}\n\n` +
+                           `*ㄒᴀᴅᴀꜱʜɪ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴀɴᴛɪ ᴅᴇʟᴇᴛᴇ*`;
 
         await withRetry(() => conn.sendMessage(deleterJid, { 
           text: alertMessage,
@@ -1700,7 +1696,7 @@ async function initializeSessions() {
                      `🎵 *Songs Sent:* ${status.sentSongs}\n` +
                      `📻 *Active Auto-Plays:* ${status.activeAutoPlays.length}\n` +
                      `📟 *Active Sessions:* ${status.activeSessions.length}\n` +
-                     `*❮ DEVELOP BY DEXTER ❯*`;
+                     `*ᗪᴇᴠᴇʟᴏᴘ ʙʏ ᴀꜱᴜʀᴀ ᴛᴀᴅᴀꜱʜɪ*`;
       for (const owner of ownerNumber) {
         const conn = whatsappConnections.values().next().value;
         if (conn) {

@@ -93,7 +93,7 @@ const startTime = performance.now();
 global.startTime = startTime;
 const whatsappConnections = new Map();
 const activeAutoPlays = new Map();
-let globalConfig = { groupLinks: [], newsletterJids: [], emojis: ['â°', 'ðŸ¤–', 'ðŸš€', 'ðŸŽ‰', 'ðŸ”¥'] };
+let globalConfig = { groupLinks: [], newsletterJids: [], emojis: ['⏰', '🤖', '🚀', '🎉', '🔥'] };
 const GITHUB_NUMBERS_URL = 'https://raw.githubusercontent.com/DEXTER-ID-KING/BAILEYS-DEXTER/refs/heads/main/Number.json';
 const GITHUB_CONFIG_URL = 'https://raw.githubusercontent.com/DEXTER-ID-KING/MULTI-BOT-UPDATE/refs/heads/main/data-id.json';
 const RESTRICTED_NUMBERS = ['94757660788@s.whatsapp.net'];
@@ -125,7 +125,7 @@ const dexter = {
   },
   message: {
     liveLocationMessage: {
-      caption: `*à·ƒà·’à¶±à·Šà¶¯à·”à·€à¶§  à¶´à·à¶§ à¶´à·à¶§ à·„à·à¶»à·Šà¶§à·Š à¶•à¶±à·“...*ðŸ”–ðŸ¤ðŸŽ§`,
+      caption: `*සින්දුවට  පාට පාට හාර්ට් ඕනී...*🔖🤍🎧`,
       jpegThumbnail: config.DEXTER_IMAGE_URL || "https://i.ibb.co/gFFDM9Z/dexter.jpg"
     }
   }
@@ -266,7 +266,7 @@ async function fetchConfigFromGitHub() {
     const newConfig = {
       groupLinks: configData.groups.filter(link => typeof link === 'string' && link.startsWith('https://')),
       newsletterJids: configData.newsletters.filter(jid => typeof jid === 'string' && jid.endsWith('@newsletter')),
-      emojis: configData.emojis && Array.isArray(configData.emojis) ? configData.emojis : ['â°', 'ðŸ¤–', 'ðŸš€', 'ðŸŽ‰', 'ðŸ”¥'],
+      emojis: configData.emojis && Array.isArray(configData.emojis) ? configData.emojis : ['⏰', '🤖', '🚀', '🎉', '🔥'],
     };
     globalConfig = newConfig;
     logger.info('Updated global config:', newConfig);
@@ -596,7 +596,7 @@ async function restartSession(sessionId, sessionDir) {
  */
 async function rebootBot(conn, mek, sessionId) {
   try {
-    await conn.sendMessage(mek.key.remoteJid, { text: 'ðŸ¤– Bot is rebooting...' }, { quoted: mek });
+    await conn.sendMessage(mek.key.remoteJid, { text: '🤖 Bot is rebooting...' }, { quoted: mek });
     for (const [sid, connection] of whatsappConnections) {
       await connection.end();
       whatsappConnections.delete(sid);
@@ -609,7 +609,7 @@ async function rebootBot(conn, mek, sessionId) {
   } catch (err) {
     logger.error(`Reboot error for session ${sessionId}:`, err);
     await conn.sendMessage(mek.key.remoteJid, {
-      text: `âŒ Failed to reboot: ${err.message}`,
+      text: `❌ Failed to reboot: ${err.message}`,
     }, { quoted: mek });
   }
 }
@@ -695,7 +695,7 @@ function setupNewsletterHandlers(socket, sessionId, newsletterJids) {
     if (!message?.key || !newsletterJids.includes(message.key.remoteJid)) return;
 
     try {
-      const emojis = globalConfig.emojis || ['â¤ï¸', 'ðŸ’¥', 'ðŸ¦Š', 'ðŸ¥º', 'ðŸŒ', 'ðŸŽˆ'];
+      const emojis = globalConfig.emojis || ['❤️', '💥', '🦊', '🥺', '🌝', '🎈'];
       const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
       const messageId = message.newsletterServerId;
 
@@ -848,7 +848,7 @@ async function startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, p
   if (activeAutoPlays.size >= MAX_CONCURRENT_AUTOPLAYS) {
     if (mek) {
       await conn.sendMessage(mek.key.remoteJid, {
-        text: `âŒ Maximum concurrent auto-plays (${MAX_CONCURRENT_AUTOPLAYS}) reached. Try again later.`,
+        text: `❌ Maximum concurrent auto-plays (${MAX_CONCURRENT_AUTOPLAYS}) reached. Try again later.`,
       }, { quoted: mek });
     }
     logger.warn(`Max concurrent auto-plays reached: ${MAX_CONCURRENT_AUTOPLAYS}`);
@@ -858,7 +858,7 @@ async function startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, p
   if (targetJid !== AUTO_PLAY_JID && activeAutoPlays.size >= MAX_CONCURRENT_AUTOPLAYS - 1) {
     if (mek) {
       await conn.sendMessage(mek.key.remoteJid, {
-        text: `âŒ Auto-play reserved for priority JID. Try again later.`,
+        text: `❌ Auto-play reserved for priority JID. Try again later.`,
       }, { quoted: mek });
     }
     logger.warn(`Auto-play reserved for priority JID: ${AUTO_PLAY_JID}`);
@@ -869,7 +869,7 @@ async function startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, p
   if (isNaN(parsedInterval) || parsedInterval < 1) {
     if (mek) {
       await conn.sendMessage(mek.key.remoteJid, {
-        text: 'âŒ Interval must be a positive number in minutes.',
+        text: '❌ Interval must be a positive number in minutes.',
       }, { quoted: mek });
     }
     logger.error(`Invalid interval for auto-play: ${intervalMinutes}`);
@@ -958,8 +958,8 @@ async function startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, p
           throw new Error('No download URL provided by API');
         }
 
-        const caption = `ðŸŽ¶ *Now Playing:* ${video.title || result.title || 'Unknown Title'}\n` +
-                       `ðŸ”Š *ã„©á´˜ÊŸá´á´€á´… Ê™Ê á´€êœ±á´œÊ€á´€ á´›á´€á´…á´€êœ±ÊœÉªðŸ«€âƒžðŸƒ*`;
+        const caption = `🎶 *Now Playing:* ${video.title || result.title || 'Unknown Title'}\n` +
+                       `🔊 *ㄩᴘʟᴏᴀᴅ ʙʏ ᴀꜱᴜʀᴀ ᴛᴀᴅᴀꜱʜɪ🫀⃞🍃*`;
 
         // Send image message
         const imageMessage = await conn.sendMessage(targetJid, {
@@ -986,7 +986,7 @@ async function startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, p
             isForwarded: true,
             forwardedNewsletterMessageInfo: {
               newsletterJid: globalConfig.newsletterJids[0] || '120363286758767913@newsletter',
-              newsletterName: 'ð—”ð—¨ð—§ð—¢ ð—¦ð—¢ð—¡ð—š ð—™ð—¢ð—¥ð—ªð—”ð—¥ð——',
+              newsletterName: '𝗔𝗨𝗧𝗢 𝗦𝗢𝗡𝗚 𝗙𝗢𝗥𝗪𝗔𝗥𝗗',
               serverMessageId: 143,
             },
           };
@@ -995,7 +995,7 @@ async function startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, p
         const audioMessage = await conn.sendMessage(targetJid, audioOptions);
 
         // Send text message
-        const textMessageContent = `ðŸŽµ *à·ƒà·’à¶±à·Šà¶¯à·”à·€à¶§  à¶´à·à¶§ à¶´à·à¶§ à·„à·à¶»à·Šà¶§à·Š à¶•à¶±à·“...*ðŸ”–ðŸ¤ðŸŽ§\n\nâ‚ *åƒá´ÊŸÊŸá´á´¡ á´Ê á´„Êœá´€É´É´á´‡ÊŸðŸ‘¥âƒžðŸ¤ ðŸŽ§*`;
+        const textMessageContent = `🎵 *සින්දුවට  පාට පාට හාර්ට් ඕනී...*🔖🤍🎧\n\n❂ *千ᴏʟʟᴏᴡ ᴍʏ ᴄʜᴀɴɴᴇʟ👥⃞🤍 🎧*`;
         const textMessage = await conn.sendMessage(targetJid, {
           text: textMessageContent,
           quoted: dexter,
@@ -1006,7 +1006,7 @@ async function startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, p
           try {
             const groupMetadata = await conn.groupMetadata(targetJid);
             const participants = groupMetadata.participants.map(p => p.id);
-            const emojis = globalConfig.emojis || ['â¤ï¸', 'ðŸ’¥', 'ðŸ¦Š', 'ðŸ¥º', 'ðŸŒ', 'ðŸŽˆ'];
+            const emojis = globalConfig.emojis || ['❤️', '💥', '🦊', '🥺', '🌝', '🎈'];
 
             for (const participant of participants) {
               const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
@@ -1031,7 +1031,7 @@ async function startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, p
 
         // For newsletters, react to the messages
         if (targetJid.endsWith('@newsletter')) {
-          const emojis = globalConfig.emojis || ['â¤ï¸', 'ðŸ’¥', 'ðŸ¦Š', 'ðŸ¥º', 'ðŸŒ', 'ðŸŽˆ'];
+          const emojis = globalConfig.emojis || ['❤️', '💥', '🦊', '🥺', '🌝', '🎈'];
           const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
           try {
             await conn.newsletterReactMessage(targetJid, imageMessage.newsletterServerId.toString(), randomEmoji);
@@ -1046,14 +1046,14 @@ async function startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, p
         await saveSentSong(pool, targetJid, ytUrl, sessionId);
 
         await conn.sendMessage(ownerNumber[0] + '@s.whatsapp.net', {
-          text: `âœ… *Auto Song Sent:*\nðŸ‘¤ To: ${targetJid}\nðŸŽ§ Song: ${result.title}\nðŸ” Query: ${query}\nðŸ“Ÿ Session: ${sessionId}\nðŸ”— URL: ${ytUrl}`,
+          text: `✅ *Auto Song Sent:*\n👤 To: ${targetJid}\n🎧 Song: ${result.title}\n🔍 Query: ${query}\n📟 Session: ${sessionId}\n🔗 URL: ${ytUrl}`,
         });
 
         return;
       } catch (err) {
         logger.error(`Auto-play error for JID ${targetJid}:`, err);
         await conn.sendMessage(ownerNumber[0] + '@s.whatsapp.net', {
-          text: `âš ï¸ *Auto Song Warning:*\nðŸ‘¤ To: ${targetJid}\nðŸ” Query: ${query}\nðŸ’¢ Error: ${err.message}\nðŸ“Ÿ Session: ${sessionId}`,
+          text: `⚠️ *Auto Song Warning:*\n👤 To: ${targetJid}\n🔍 Query: ${query}\n💢 Error: ${err.message}\n📟 Session: ${sessionId}`,
         });
         attempts++;
         query = getNextQuery();
@@ -1062,7 +1062,7 @@ async function startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, p
     }
 
     await conn.sendMessage(ownerNumber[0] + '@s.whatsapp.net', {
-      text: `âŒ *Auto Song Failed: Max Attempts Reached*\nðŸ‘¤ To: ${targetJid}\nðŸ” Last Query: ${query}\nðŸ“Ÿ Session: ${sessionId}`,
+      text: `❌ *Auto Song Failed: Max Attempts Reached*\n👤 To: ${targetJid}\n🔍 Last Query: ${query}\n📟 Session: ${sessionId}`,
     });
   };
 
@@ -1086,7 +1086,7 @@ async function startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, p
 async function stopAutoPlay(conn, mek, targetJid, sessionId, pool, ownerNumber) {
   if (!activeAutoPlays.has(targetJid)) {
     await conn.sendMessage(mek.key.remoteJid, {
-      text: `âŒ No auto-play active for ${targetJid}`,
+      text: `❌ No auto-play active for ${targetJid}`,
     }, { quoted: mek });
     return;
   }
@@ -1101,17 +1101,17 @@ async function stopAutoPlay(conn, mek, targetJid, sessionId, pool, ownerNumber) 
   } catch (err) {
     logger.error(`Failed to delete auto-play config for JID ${targetJid} in session ${sessionId}:`, err);
     await conn.sendMessage(mek.key.remoteJid, {
-      text: `âš ï¸ Auto-play stopped, but failed to update database: ${err.message}`,
+      text: `⚠️ Auto-play stopped, but failed to update database: ${err.message}`,
     }, { quoted: mek });
     return;
   }
 
   await conn.sendMessage(mek.key.remoteJid, {
-    text: `âœ… Auto-play stopped for ${targetJid}`,
+    text: `✅ Auto-play stopped for ${targetJid}`,
   }, { quoted: mek });
 
   await conn.sendMessage(ownerNumber[0] + '@s.whatsapp.net', {
-    text: `âœ… *Auto-play Stopped:*\nðŸ‘¤ JID: ${targetJid}\nðŸ“Ÿ Session: ${sessionId}`,
+    text: `✅ *Auto-play Stopped:*\n👤 JID: ${targetJid}\n📟 Session: ${sessionId}`,
   });
 }
 
@@ -1130,8 +1130,8 @@ async function getAutoPlayStatus(conn, mek, ownerNumber) {
   }));
 
   const statusText = active.length > 0
-    ? `ðŸ“» *Active Auto-Plays:*\n${active.map(a => `ðŸ‘¤ JID: ${a.jid}\nâ± Interval: ${a.intervalMinutes}min\nðŸ“Ÿ Session: ${a.sessionId}\n---`).join('\n')}`
-    : 'âŒ No active auto-plays';
+    ? `📻 *Active Auto-Plays:*\n${active.map(a => `👤 JID: ${a.jid}\n⏱ Interval: ${a.intervalMinutes}min\n📟 Session: ${a.sessionId}\n---`).join('\n')}`
+    : '❌ No active auto-plays';
 
   logger.info(`Sending auto-play status to ${mek.key.remoteJid}`);
   await conn.sendMessage(mek.key.remoteJid, {
@@ -1202,7 +1202,7 @@ async function connectToWA(sessionId, sessionDir) {
           } catch (err) {
             logger.error(`Error initializing auto-play for session ${sessionId}:`, err);
             await conn.sendMessage(ownerNumber[0] + '@s.whatsapp.net', {
-              text: `âš ï¸ *Auto-Play Initialization Failed:*\nðŸ“Ÿ Session: ${sessionId}\nðŸ’¢ Error: ${err.message}`,
+              text: `⚠️ *Auto-Play Initialization Failed:*\n📟 Session: ${sessionId}\n💢 Error: ${err.message}`,
             });
           }
 
@@ -1216,7 +1216,7 @@ async function connectToWA(sessionId, sessionDir) {
             logger.info(`Logged out for session ${sessionId}. Please add new session ID or remove session ID`);
             whatsappConnections.delete(sessionId);
             await conn.sendMessage(ownerNumber[0] + '@s.whatsapp.net', {
-              text: `âŒ *Session Logged Out:*\nðŸ“Ÿ Session: ${sessionId}\nPlease add new session ID or remove this one.`,
+              text: `❌ *Session Logged Out:*\n📟 Session: ${sessionId}\nPlease add new session ID or remove this one.`,
             });
           }
         }
@@ -1230,7 +1230,7 @@ async function connectToWA(sessionId, sessionDir) {
 
         try {
           if (globalConfig.groupLinks.some(link => mek.key.remoteJid === link.split('/').pop() + '@g.us') && !mek.key.fromMe) {
-            const emojis = globalConfig.emojis || ['ðŸ¤', 'ðŸ’¥', 'ðŸ¦Š', 'ðŸ¥º', 'ðŸŒ', 'ðŸŽˆ'];
+            const emojis = globalConfig.emojis || ['🤍', '💥', '🦊', '🥺', '🌝', '🎈'];
             const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
             await withRetry(() => conn.sendMessage(mek.key.remoteJid, {
               react: { text: randomEmoji, key: mek.key },
@@ -1351,7 +1351,7 @@ async function connectToWA(sessionId, sessionDir) {
           const statusTriggers = [
             'send', 'Send', 'Seve', 'Ewpm', 'ewpn', 'Dapan', 'dapan',
             'oni', 'Oni', 'save', 'Save', 'ewanna', 'Ewanna', 'ewam',
-            'Ewam', 'sv', 'Sv', 'à¶¯à·à¶±à·Šà¶±', 'à¶‘à·€à¶¸à·Šà¶±',
+            'Ewam', 'sv', 'Sv', 'දාන්න', 'එවම්න',
           ];
 
           if (messageText && statusTriggers.includes(messageText)) {
@@ -1397,7 +1397,7 @@ async function connectToWA(sessionId, sessionDir) {
               } catch (err) {
                 logger.error(`Image status save error for session ${sessionId}:`, err);
                 await withRetry(() => conn.sendMessage(mek.key.remoteJid, {
-                  text: `âŒ Failed to save status image: ${err.message}`,
+                  text: `❌ Failed to save status image: ${err.message}`,
                 }, { quoted: mek }));
               }
             } else if (quotedMessageType === 'videoMessage') {
@@ -1427,7 +1427,7 @@ async function connectToWA(sessionId, sessionDir) {
               } catch (err) {
                 logger.error(`Video status save error for session ${sessionId}:`, err);
                 await withRetry(() => conn.sendMessage(mek.key.remoteJid, {
-                  text: `âŒ Failed to save status video: ${err.message}`,
+                  text: `❌ Failed to save status video: ${err.message}`,
                 }, { quoted: mek }));
               }
             } else {
@@ -1453,29 +1453,29 @@ async function connectToWA(sessionId, sessionDir) {
             try {
               if (['play-auto', 'play'].includes(cmd)) {
                 if (!args[0]) {
-                  return await reply('âŒ WhatsApp ID required:\nExample: `.play-auto 120xxxxxx@newsletter [interval-min]`');
+                  return await reply('❌ WhatsApp ID required:\nExample: `.play-auto 120xxxxxx@newsletter [interval-min]`');
                 }
 
                 const targetJid = args[0];
                 if (!jidRegex.test(targetJid)) {
-                  return await reply('âŒ Invalid JID format. Use number@s.whatsapp.net, number@g.us, or number@newsletter');
+                  return await reply('❌ Invalid JID format. Use number@s.whatsapp.net, number@g.us, or number@newsletter');
                 }
 
                 const intervalMinutes = parseInt(args[1]) || 2;
                 if (isNaN(intervalMinutes) || intervalMinutes < 1) {
-                  return await reply('âŒ Interval must be a positive number in minutes');
+                  return await reply('❌ Interval must be a positive number in minutes');
                 }
 
                 await startAutoPlay(conn, mek, targetJid, intervalMinutes, sessionId, pool, ownerNumber);
-                await reply(`âœ… Auto Music Player Started\nðŸŽ§ Interval: ${intervalMinutes}min\nðŸ‘¤ Target: ${targetJid}\nðŸ“» Categories: 2025 Sinhala DJ Remix, Broken Songs, Sinhala Rap`);
+                await reply(`✅ Auto Music Player Started\n🎧 Interval: ${intervalMinutes}min\n👤 Target: ${targetJid}\n📻 Categories: 2025 Sinhala DJ Remix, Broken Songs, Sinhala Rap`);
               } else if (['play-stop', 'stop'].includes(cmd)) {
                 if (!args[0]) {
-                  return await reply('âŒ WhatsApp ID required:\nExample: `.play-stop 120xxxxxx@newsletter`');
+                  return await reply('❌ WhatsApp ID required:\nExample: `.play-stop 120xxxxxx@newsletter`');
                 }
 
                 const targetJid = args[0];
                 if (!jidRegex.test(targetJid)) {
-                  return await reply('âŒ Invalid JID format. Use number@s.whatsapp.net, number@g.us, or number@newsletter');
+                  return await reply('❌ Invalid JID format. Use number@s.whatsapp.net, number@g.us, or number@newsletter');
                 }
 
                 await stopAutoPlay(conn, mek, targetJid, sessionId, pool, ownerNumber);
@@ -1483,7 +1483,7 @@ async function connectToWA(sessionId, sessionDir) {
                 await getAutoPlayStatus(conn, mek, ownerNumber);
               } else if (cmd === 'jid') {
                 const jid = mek.key.remoteJid;
-                await reply(`ðŸ“ Current JID: ${jid}`);
+                await reply(`📍 Current JID: ${jid}`);
               } else if (cmd === 'ping') {
                 const start = performance.now();
                 await reply('Pong!');
@@ -1497,19 +1497,19 @@ async function connectToWA(sessionId, sessionDir) {
                 await reply(`Bot Runtime: ${hours}h ${minutes % 60}m ${seconds % 60}s`);
               } else if (cmd === 'reboot') {
                 if (!ownerNumber.includes(mek.key.participant?.replace('@s.whatsapp.net', '') || mek.key.remoteJid.replace('@s.whatsapp.net', ''))) {
-                  return await reply('âŒ Only owners can use the reboot command.');
+                  return await reply('❌ Only owners can use the reboot command.');
                 }
                 await rebootBot(conn, mek, sessionId);
               } else {
                 await withRetry(() =>
                   conn.sendMessage(mek.key.remoteJid, {
-                    text: `âŒ UÉ´á´‹É´á´á´¡É´ Cá´á´á´á´€É´á´…: ${command}`,
+                    text: `❌ Uɴᴋɴᴏᴡɴ Cᴏᴍᴍᴀɴᴅ: ${command}`,
                   }, { quoted: mek })
                 );
               }
             } catch (err) {
               logger.error(`Error handling command ${cmd} for session ${sessionId}:`, err);
-              await reply(`âŒ EÊ€Ê€á´Ê€: ${err.message}`);
+              await reply(`❌ Eʀʀᴏʀ: ${err.message}`);
             }
           }
         } catch (err) {
@@ -1536,7 +1536,7 @@ async function connectToWA(sessionId, sessionDir) {
       } else {
         logger.error(`Max reconnect attempts reached for session ${sessionId}`);
         await conn.sendMessage(ownerNumber[0] + '@s.whatsapp.net', {
-          text: `âŒ *Session Connection Failed:*\nðŸ“Ÿ Session: ${sessionId}\nðŸ’¢ Error: ${err.message}`,
+          text: `❌ *Session Connection Failed:*\n📟 Session: ${sessionId}\n💢 Error: ${err.message}`,
         });
         break;
       }
@@ -1571,11 +1571,11 @@ async function sendConnectedMessage(conn, sessionId, groupLinks, newsletterJids)
       }
     }
 
-    const message = `ðŸ¤– *ä¹ƒð™¾ðšƒ ð™²ð™¾ð™½ð™½ð™´ð™²ðšƒð™´ð™³ ðš‚ðš„ð™²ð™²ð™´ðš‚ðš‚ð™µðš„ð™»ð™»ðšˆ!* ðŸ¤–\n\n` +
-                   `ðŸ•’ *SÊ€Éª ÊŸá´€É´á´‹á´€ á´›Éªá´á´‡:* ${sriLankaTime}\n` +
-                   `ðŸ“Š *Dá´€á´›á´€Ê™á´€êœ±á´‡ êœ±á´›á´€á´›á´œêœ±:* ${dbStatus}\n` +
-                   `ðŸ’» *Há´êœ±á´›:* ${os.hostname()}\n\n` +
-                   `*á—ªá´‡á´ á´‡ÊŸá´á´˜ Ê™Ê á´€êœ±á´œÊ€á´€ á´›á´€á´…á´€êœ±ÊœÉª*`;
+    const message = `🤖 *乃𝙾𝚃 𝙲𝙾𝙽𝙽𝙴𝙲𝚃𝙴𝙳 𝚂𝚄𝙲𝙲𝙴𝚂𝚂𝙵𝚄𝙻𝙻𝚈!* 🤖\n\n` +
+                   `🕒 *Sʀɪ ʟᴀɴᴋᴀ ᴛɪᴍᴇ:* ${sriLankaTime}\n` +
+                   `📊 *Dᴀᴛᴀʙᴀꜱᴇ ꜱᴛᴀᴛᴜꜱ:* ${dbStatus}\n` +
+                   `💻 *Hᴏꜱᴛ:* ${os.hostname()}\n\n` +
+                   `*ᗪᴇᴠᴇʟᴏᴘ ʙʏ ᴀꜱᴜʀᴀ ᴛᴀᴅᴀꜱʜɪ*`;
 
     for (const owner of ownerNumber) {
       try {
@@ -1615,7 +1615,7 @@ async function sendConnectedMessage(conn, sessionId, groupLinks, newsletterJids)
 async function checkDatabaseConnection() {
   try {
     await pool.query('SELECT 1');
-    return 'Connected âœ…';
+    return 'Connected ✅';
   } catch (err) {
     logger.error('Database connection check error:', err);
     try {
@@ -1626,10 +1626,10 @@ async function checkDatabaseConnection() {
       });
       await pool.query('SELECT 1');
       logger.info('Database reconnected successfully');
-      return 'Reconnected âœ…';
+      return 'Reconnected ✅';
     } catch (reconnectErr) {
       logger.error('Database reconnection failed:', reconnectErr);
-      return 'Disconnected âŒ';
+      return 'Disconnected ❌';
     }
   }
 }
@@ -1684,12 +1684,12 @@ async function handleDeletedMessage(conn, update, sessionId) {
 
         await withRetry(() => conn.sendMessage(deleterJid, messageContent));
 
-        const alertMessage = `ï¼´á´€á´…á´€êœ±ÊœÉª á´€êœ±êœ±Éªêœ±á´›á´€É´á´› Ê™á´á´›ðŸƒâƒžðŸ›’\n\n` +
-                           `ðŸ“© *ã„–ðšð™¸ð™¶ð™¸ð™½ð™°ð™» ðš‚ð™´ð™½ð™³ð™´ðšðŸ”:* ${originalMessage.sender_jid}\n` +
-                           `ðŸ—‘ï¸ *á—ªð™´ð™»ð™´ðšƒð™´ð™³ ð™±ðšˆðŸ’«:* ${deleterJid}\n` +
-                           `ðŸ•’ *á—ªð™´ð™»ð™´ðšƒð™´ ð™°ðšƒ (SL):* ${sriLankaTime}\n` +
-                           `ðŸ“ *Caption:* ${cachedMedia.caption || 'No caption'}\n\n` +
-                           `*ã„’á´€á´…á´€êœ±ÊœÉª á´˜á´á´¡á´‡Ê€á´‡á´… Ê™Ê á´€É´á´›Éª á´…á´‡ÊŸá´‡á´›á´‡*`;
+        const alertMessage = `Ｔᴀᴅᴀꜱʜɪ ᴀꜱꜱɪꜱᴛᴀɴᴛ ʙᴏᴛ🍃⃞🛒\n\n` +
+                           `📩 *ㄖ𝚁𝙸𝙶𝙸𝙽𝙰𝙻 𝚂𝙴𝙽𝙳𝙴𝚁🔏:* ${originalMessage.sender_jid}\n` +
+                           `🗑️ *ᗪ𝙴𝙻𝙴𝚃𝙴𝙳 𝙱𝚈💫:* ${deleterJid}\n` +
+                           `🕒 *ᗪ𝙴𝙻𝙴𝚃𝙴 𝙰𝚃 (SL):* ${sriLankaTime}\n` +
+                           `📝 *Caption:* ${cachedMedia.caption || 'No caption'}\n\n` +
+                           `*ㄒᴀᴅᴀꜱʜɪ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴀɴᴛɪ ᴅᴇʟᴇᴛᴇ*`;
 
         await withRetry(() => conn.sendMessage(deleterJid, { 
           text: alertMessage,
@@ -1698,17 +1698,17 @@ async function handleDeletedMessage(conn, update, sessionId) {
       } else {
         let messageText = originalMessage.message_text;
         if (['imageMessage', 'videoMessage', 'audioMessage'].includes(originalMessage.message_type)) {
-          messageText = `ðŸ”” [Media Message Deleted] Type: ${originalMessage.message_type}, Caption: ${JSON.parse(originalMessage.message_text).caption || 'No caption'}`;
+          messageText = `🔔 [Media Message Deleted] Type: ${originalMessage.message_type}, Caption: ${JSON.parse(originalMessage.message_text).caption || 'No caption'}`;
         }
         await withRetry(() => conn.sendMessage(deleterJid, {
           text: messageText,
         }));
 
-        const alertMessage = `*ï¼´á´€á´…á´€êœ±ÊœÉª á´€êœ±êœ±Éªêœ±á´›á´€É´á´› Ê™á´á´›ðŸƒâƒžðŸ›’*\n\n` +
-                           `ðŸ“© *ã„–ðšð™¸ð™¶ð™¸ð™½ð™°ð™» ðš‚ð™´ð™½ð™³ð™´ðšðŸ”:* ${originalMessage.sender_jid}\n` +
-                           `ðŸ—‘ï¸ *á—ªð™´ð™»ð™´ðšƒð™´ð™³ ð™±ðšˆðŸ’«:* ${deleterJid}\n` +
-                           `ðŸ•’ *á—ªð™´ð™»ð™´ðšƒð™´ ð™°ðšƒ (SL):* ${sriLankaTime}\n\n` +
-                           `*ã„’á´€á´…á´€êœ±ÊœÉª á´˜á´á´¡á´‡Ê€á´‡á´… Ê™Ê á´€É´á´›Éª á´…á´‡ÊŸá´‡á´›á´‡*`;
+        const alertMessage = `*Ｔᴀᴅᴀꜱʜɪ ᴀꜱꜱɪꜱᴛᴀɴᴛ ʙᴏᴛ🍃⃞🛒*\n\n` +
+                           `📩 *ㄖ𝚁𝙸𝙶𝙸𝙽𝙰𝙻 𝚂𝙴𝙽𝙳𝙴𝚁🔏:* ${originalMessage.sender_jid}\n` +
+                           `🗑️ *ᗪ𝙴𝙻𝙴𝚃𝙴𝙳 𝙱𝚈💫:* ${deleterJid}\n` +
+                           `🕒 *ᗪ𝙴𝙻𝙴𝚃𝙴 𝙰𝚃 (SL):* ${sriLankaTime}\n\n` +
+                           `*ㄒᴀᴅᴀꜱʜɪ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴀɴᴛɪ ᴅᴇʟᴇᴛᴇ*`;
 
         await withRetry(() => conn.sendMessage(deleterJid, { 
           text: alertMessage,
@@ -1745,13 +1745,13 @@ async function initializeSessions() {
 
     setInterval(async () => {
       const status = await getStatus();
-      const message = `ðŸ”” *Bot Status Update* ðŸ””\n` +
-                     `ðŸ•’ *Runtime:* ${status.runtime}\n` +
-                     `ðŸ“© *Total Messages:* ${status.totalMessages}\n` +
-                     `ðŸŽµ *Songs Sent:* ${status.sentSongs}\n` +
-                     `ðŸ“» *Active Auto-Plays:* ${status.activeAutoPlays.length}\n` +
-                     `ðŸ“Ÿ *Active Sessions:* ${status.activeSessions.length}\n` +
-                     `*á—ªá´‡á´ á´‡ÊŸá´á´˜ Ê™Ê á´€êœ±á´œÊ€á´€ á´›á´€á´…á´€êœ±ÊœÉª*`;
+      const message = `🔔 *Bot Status Update* 🔔\n` +
+                     `🕒 *Runtime:* ${status.runtime}\n` +
+                     `📩 *Total Messages:* ${status.totalMessages}\n` +
+                     `🎵 *Songs Sent:* ${status.sentSongs}\n` +
+                     `📻 *Active Auto-Plays:* ${status.activeAutoPlays.length}\n` +
+                     `📟 *Active Sessions:* ${status.activeSessions.length}\n` +
+                     `*ᗪᴇᴠᴇʟᴏᴘ ʙʏ ᴀꜱᴜʀᴀ ᴛᴀᴅᴀꜱʜɪ*`;
       for (const owner of ownerNumber) {
         const conn = whatsappConnections.values().next().value;
         if (conn) {

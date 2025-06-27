@@ -6,7 +6,7 @@ module.exports = {
   IMGBB_API_KEY: '3839e303da7b555ec5d574e53eb836d2',
   RENDER_JSON_URL: '',
   AUTO_STATUS_SEEN: true,
-  READ_MESSAGE: true,
+  READ_MESSAGE: false,
   MAX_RETRIES: 3,
   NEWSLETTER_MESSAGE_ID: '428',
   AUTO_RECORDING: 'true'
